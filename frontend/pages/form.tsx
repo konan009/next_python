@@ -7,12 +7,12 @@ import Image from 'next/image'
 import Head from 'next/head'
 
 const SignupSchema = Yup.object().shape({
-  name: Yup.string()
+  password: Yup.string()
     .min(2, 'Too Short!')
     .max(70, 'Too Long!')
     .required('Required'),
-  email: Yup.string()
-    .email('Invalid email')
+  username: Yup.string()
+    .email('Invalid username')
     .required('Required'),
 });
 
@@ -31,29 +31,41 @@ const Sample = () => {
       <main className={styles.main}>
       <Formik
        initialValues={{
-         name: '',
-         email: '',
+        password: '',
+         username: '',
        }}
        validationSchema={SignupSchema}
        onSubmit={values => {
          console.log(values);
+        var response =   fetch('api/token', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+              body: JSON.stringify(values),
+            }).then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+            });
+
+
        }}
      >
        {({ errors, touched }) => (
          <Form>
           <div>
-           <Field name="name"  />
-            {errors.name && touched.name ? (
-             <div>{errors.name}</div>
+           <Field name="password"  />
+            {errors.password && touched.password ? (
+             <div>{errors.password}</div>
            ) : null}
-          <ErrorMessage name="name" />
+          <ErrorMessage name="password" />
           </div>
           <div>
-           <Field name="email" type="email" />
-            {errors.email && touched.email ? (
-             <div>{errors.email}</div>
+           <Field name="username" type="username" />
+            {errors.username && touched.username ? (
+             <div>{errors.username}</div>
            ) : null}
-         <ErrorMessage name="email" />
+          <ErrorMessage name="username" />
            </div>
            <button type="submit">Submit</button>
          </Form>
