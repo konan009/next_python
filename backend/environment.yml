@@ -1,0 +1,13 @@
+name : playenv
+channels :
+  - conda-forge
+dependencies:
+  - python=3.8
+  - Django=3.2.6
+  - numpy=1.19.5
+  - matplotlib=3.3.4
+  - djangorestframework=3.12.4
+  - Pillow=8.4.0
+  - djangorestframework_simplejwt
+
+
